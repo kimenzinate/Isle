@@ -1,6 +1,7 @@
 import StatusBar from '../components/StatusBar';
 import HomeIndicator from '../components/HomeIndicator';
 import TabBar from '../components/TabBar';
+import BackButton from '../components/BackButton';
 import { assets } from '../assets';
 import './JournalScreens.css';
 
@@ -79,9 +80,7 @@ export function RecommendActivitiesScreen({ onBack, onIslandDetail }) {
   return (
     <div className="screen recommend-screen screen-scroll">
       <StatusBar />
-      <button type="button" className="island-create__back" onClick={onBack}>
-        <img src={assets.chevronLeft} alt="" />
-      </button>
+      <BackButton className="island-create__back" onClick={onBack} />
 
       <div className="recommend-screen__content">
         <div className="recommend-screen__title-row">

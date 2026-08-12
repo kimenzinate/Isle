@@ -2,6 +2,7 @@ import { useState } from 'react';
 import StatusBar from '../components/StatusBar';
 import HomeIndicator from '../components/HomeIndicator';
 import TopBar from '../components/TopBar';
+import BackButton from '../components/BackButton';
 import TabBar from '../components/TabBar';
 import PrimaryButton from '../components/PrimaryButton';
 import { assets } from '../assets';
@@ -876,9 +877,7 @@ export function ComfortThingsScreen({ onBack }) {
   return (
     <div className="screen comfort-screen screen-scroll">
       <StatusBar />
-      <button type="button" className="island-create__back" onClick={onBack}>
-        <img src={assets.libraryChevronLeft} alt="" />
-      </button>
+      <BackButton className="island-create__back" onClick={onBack} />
       <div className="comfort-screen__header">
         <div>
           <h1 className="serif-title-xl">Library</h1>
