@@ -1,0 +1,53 @@
+.primary-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 16px;
+  padding: 16px;
+  font-size: 18px;
+  font-weight: 700;
+  color: #faf6f0;
+  min-height: 56px;
+}
+
+.primary-btn--full {
+  width: 100%;
+}
+
+.primary-btn--dark {
+  background: var(--btn-primary);
+}
+
+.primary-btn--charcoal {
+  background: var(--btn-dark);
+  border-radius: 60px;
+  min-height: 50px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.primary-btn--purple {
+  background: var(--btn-purple);
+  border-radius: 16px;
+}
+
+.primary-btn--disabled {
+  background: var(--btn-disabled);
+  cursor: not-allowed;
+}
+
+.primary-btn--pill {
+  border-radius: 60px;
+  min-height: 50px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.primary-btn--beige {
+  background: var(--surface-input);
+  color: var(--text-primary);
+  border-radius: 60px;
+  min-height: 50px;
+  font-size: 14px;
+  font-weight: 600;
+}

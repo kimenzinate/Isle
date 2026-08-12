@@ -1,0 +1,19 @@
+.home-indicator {
+  width: 100%;
+  height: var(--home-indicator-height);
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding-bottom: 7.92px;
+}
+
+.home-indicator__bar {
+  width: 132.58px;
+  height: 4.95px;
+  border-radius: 100px;
+  background: #000;
+}
+
+.home-indicator__bar--light {
+  background: #fff;
+}

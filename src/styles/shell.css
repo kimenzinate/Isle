@@ -1,0 +1,74 @@
+/* Figma shell chrome — 375 × 812 */
+:root {
+  --status-bar-height: 44px;
+  --home-indicator-height: 34px;
+  --tab-bar-top: 713px;
+  --tab-bar-height: 65px;
+  --footer-top: 722px;
+  --footer-height: 56px;
+  --scroll-bottom: 99px; /* space for tab bar + home indicator */
+}
+
+.screen-chrome__status {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  z-index: 10;
+}
+
+.screen-chrome__bottom-chrome {
+  position: absolute;
+  top: var(--tab-bar-top);
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  background: var(--bg);
+  z-index: 5;
+  pointer-events: none;
+}
+
+.screen-chrome__tab-bar {
+  position: absolute;
+  top: var(--tab-bar-top);
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 20;
+  pointer-events: auto;
+}
+
+.screen-chrome__home-indicator {
+  position: absolute;
+  top: 778px;
+  left: 0;
+  right: 0;
+  width: 100%;
+  background: var(--bg);
+  z-index: 15;
+}
+
+.screen-chrome__footer {
+  position: absolute;
+  top: var(--footer-top);
+  left: 0;
+  right: 0;
+  padding: 0 24px;
+  z-index: 12;
+}
+
+.screen-chrome__scroll-below-tabs {
+  position: absolute;
+  top: var(--status-bar-height);
+  left: 0;
+  right: 0;
+  bottom: var(--scroll-bottom);
+  overflow-x: hidden;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.screen-chrome__scroll-below-tabs::-webkit-scrollbar {
+  display: none;
+}

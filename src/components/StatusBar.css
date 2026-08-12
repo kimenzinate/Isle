@@ -1,0 +1,40 @@
+.status-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  height: var(--status-bar-height);
+  padding: 0 24px;
+  background: var(--bg);
+}
+
+.status-bar__time {
+  font-size: 15.86px;
+  font-weight: 600;
+  line-height: 23.79px;
+}
+
+.status-bar__icons {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.status-bar__icon {
+  height: 12px;
+  width: auto;
+}
+
+.status-bar__icon--battery {
+  height: 13px;
+  width: 26px;
+}
+
+.status-bar--light .status-bar__time,
+.status-bar--light .status-bar__icons {
+  filter: brightness(0) invert(1);
+}
+
+.status-bar--transparent {
+  background: transparent;
+}

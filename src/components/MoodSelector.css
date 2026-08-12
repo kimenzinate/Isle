@@ -1,0 +1,70 @@
+.mood-selector {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 350px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 30px;
+}
+
+.mood-selector__face {
+  position: relative;
+  width: 184px;
+  height: 184px;
+  flex-shrink: 0;
+}
+
+.mood-selector__face-img {
+  position: absolute;
+  object-fit: contain;
+  display: block;
+  pointer-events: none;
+}
+
+.mood-selector__controls {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.mood-selector__slider-wrap {
+  position: relative;
+  width: 229px;
+  height: 24px;
+}
+
+.mood-selector__track {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+  pointer-events: none;
+}
+
+.mood-selector__segments {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  z-index: 2;
+}
+
+.mood-selector__segment {
+  flex: 1;
+  height: 100%;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+}
+
+.mood-selector__label {
+  font-family: var(--font-serif);
+  font-weight: 700;
+  font-size: 22px;
+  line-height: normal;
+  text-align: center;
+  color: var(--text-primary);
+}

@@ -1,0 +1,110 @@
+/* 0.Splash → 0.Splash 2 — Figma Term-3 nodes 734:5164 / 734:5154 */
+
+.splash-screen {
+  background: #f3f0ed;
+}
+
+.splash-screen__bg {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 375px;
+  height: 812px;
+  transform: translate(-50%, -50%);
+  display: block;
+  object-fit: cover;
+  pointer-events: none;
+}
+
+.splash-screen__hero {
+  position: absolute;
+  left: 50px;
+  top: 127px;
+  width: 275px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 26px;
+  opacity: 0;
+  transition: opacity 800ms ease-out;
+}
+
+.splash-screen--splash2 .splash-screen__hero {
+  opacity: 1;
+}
+
+.splash-screen__logo {
+  width: 150px;
+  height: 70px;
+  display: block;
+  flex-shrink: 0;
+}
+
+.splash-screen__tagline {
+  width: 100%;
+  margin: 0;
+  font-family: var(--font-sans);
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 0;
+  letter-spacing: -0.24px;
+  text-align: center;
+  color: #fff;
+}
+
+.splash-screen__tagline p {
+  margin: 0;
+  line-height: 1.5;
+}
+
+.splash-screen__footer {
+  position: absolute;
+  left: 31.88px;
+  top: 702px;
+  width: 311px;
+  opacity: 0;
+  transform: translateY(64px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+  pointer-events: none;
+}
+
+.splash-screen__cta {
+  width: 100%;
+  padding: 16px;
+  border: none;
+  border-radius: 16px;
+  background: #7c6ff7;
+  cursor: pointer;
+  font-family: var(--font-sans);
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 24px;
+  letter-spacing: -0.3125px;
+  color: #fff;
+  text-align: center;
+  transition: background 0.6s ease, color 0.6s ease;
+}
+
+
+.splash-screen--splash2 .splash-screen__footer {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.splash-screen--splash2 .splash-screen__cta {
+  background: #fff;
+  color: #e8956a;
+}
+
+.splash-screen .status-bar {
+  z-index: 2;
+}
+
+.splash-screen .home-indicator {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: transparent;
+}
