@@ -87,31 +87,12 @@
   color: #434343;
 }
 
-/* Hero mask group: 327 × 254 — Figma SVG mask, no transforms */
-.home-screen__hero-mask {
-  position: relative;
+/* Hero: 327 × 254 — pre-masked asset, Figma Frame 2147223833 / node 790:19285 */
+.home-screen__hero {
   width: 327px;
   height: 254px;
-  flex-shrink: 0;
-  overflow: hidden;
-  -webkit-mask-image: url('/assets/home-hero-mask.svg');
-  mask-image: url('/assets/home-hero-mask.svg');
-  -webkit-mask-size: 327px 254px;
-  mask-size: 327px 254px;
-  -webkit-mask-repeat: no-repeat;
-  mask-repeat: no-repeat;
-  -webkit-mask-position: center;
-  mask-position: center;
-}
-
-.home-screen__hero-image {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
   display: block;
-  pointer-events: none;
+  flex-shrink: 0;
 }
 
 .home-screen__checkin {

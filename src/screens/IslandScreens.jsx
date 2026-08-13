@@ -402,59 +402,87 @@ export function IslandCreateUploadPhoto({ title, note, onTitleChange, onNoteChan
 const photoPickerGrid = [
   assets.photoGrid1, assets.photoGrid2, assets.photoGrid3,
   assets.photoGrid4, assets.photoGrid5, assets.photoGrid6,
-  assets.photoGrid7, assets.photoGrid8, assets.photoGridFamily,
-  assets.photoGrid9, assets.photoGrid1, assets.photoGrid2,
-  assets.photoGrid3, assets.photoGrid4, assets.photoGrid5,
-  assets.photoGrid6, assets.photoGrid7, assets.photoGrid8,
-  assets.photoGrid9, assets.photoGrid3, assets.photoGrid4,
-  assets.photoGrid5, assets.photoGrid6, assets.photoGrid7,
+  assets.photoGrid7, assets.photoGrid8, assets.photoGrid9,
+  assets.photoGrid10, assets.photoGrid11, assets.photoGrid12,
+  assets.photoGrid13, assets.photoGrid14, assets.photoGrid15,
+  assets.photoGrid16, assets.photoGrid17, assets.photoGrid18,
+  assets.photoGrid19, assets.photoGrid20, assets.photoGrid21,
 ];
 
+const PHOTO_PICKER_SELECTED_INDEX = 8;
+
 export function IslandCreatePhotoPicker({ onCancel, onUpload }) {
-  const [selectedIndex, setSelectedIndex] = useState(8);
+  const [selectedIndex, setSelectedIndex] = useState(PHOTO_PICKER_SELECTED_INDEX);
 
   return (
     <div className="screen photo-picker">
-      <div className="photo-picker__top">
-        <div className="photo-picker__top-bg" aria-hidden="true" />
-        <p className="photo-picker__limit">Select up to 4 items.</p>
-        <div className="photo-picker__nav">
-          <button type="button" className="photo-picker__nav-btn" onClick={onCancel}>Cancel</button>
-          <div className="photo-picker__segmented">
-            <span className="photo-picker__segmented-option photo-picker__segmented-option--active">Photos</span>
-            <span className="photo-picker__segmented-option">Albums</span>
+      <div className="photo-picker__grid-scroll">
+        <div className="photo-picker__grid">
+          {photoPickerGrid.map((src, index) => (
+            <button
+              key={index}
+              type="button"
+              className="photo-picker__cell"
+              onClick={() => setSelectedIndex(index)}
+            >
+              <img src={src} alt="" />
+              {selectedIndex === index && (
+                <img src={assets.photoPickerSelected} alt="" className="photo-picker__check" />
+              )}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      <header className="photo-picker__top">
+        <img
+          src={assets.photoPickerTopBg}
+          alt=""
+          className="photo-picker__top-bg"
+          aria-hidden="true"
+        />
+        <div className="photo-picker__top-body">
+          <p className="photo-picker__limit">Select up to 4 items.</p>
+          <div className="photo-picker__content">
+            <div className="photo-picker__nav">
+              <button type="button" className="photo-picker__nav-btn" onClick={onCancel}>
+                Cancel
+              </button>
+              <div className="photo-picker__segmented">
+                <span className="photo-picker__segmented-option photo-picker__segmented-option--active">
+                  Photos
+                </span>
+                <span className="photo-picker__segmented-option">Albums</span>
+              </div>
+              <button
+                type="button"
+                className="photo-picker__nav-btn photo-picker__nav-btn--right"
+                onClick={onUpload}
+              >
+                Upload
+              </button>
+            </div>
+            <div className="photo-picker__search-wrap">
+              <div className="photo-picker__search">
+                <img src={assets.photoPickerSearch} alt="" className="photo-picker__search-icon" />
+                <span className="photo-picker__search-placeholder">Photos, People, Places...</span>
+                <img src={assets.photoPickerMic} alt="" className="photo-picker__search-mic" />
+              </div>
+            </div>
           </div>
-          <button type="button" className="photo-picker__nav-btn photo-picker__nav-btn--right" onClick={onUpload}>
-            Upload
-          </button>
         </div>
-        <div className="photo-picker__search">
-          <img src={assets.photoPickerSearch} alt="" className="photo-picker__search-icon" />
-          <span className="photo-picker__search-placeholder">Photos, People, Places...</span>
-          <img src={assets.photoPickerMic} alt="" className="photo-picker__search-mic" />
-        </div>
-      </div>
-      <div className="photo-picker__grid">
-        {photoPickerGrid.map((src, index) => (
-          <button
-            key={index}
-            type="button"
-            className={`photo-picker__cell ${selectedIndex === index ? 'photo-picker__cell--selected' : ''}`}
-            onClick={() => setSelectedIndex(index)}
-          >
-            <img src={src} alt="" />
-            {selectedIndex === index && (
-              <img src={assets.photoPickerSelected} alt="" className="photo-picker__check" />
-            )}
-          </button>
-        ))}
-      </div>
-      <div className="photo-picker__footer">
+      </header>
+
+      <StatusBar transparent />
+
+      <footer className="photo-picker__footer">
         <button type="button" className="photo-picker__show-selected">
           Show Selected (1)
         </button>
-        <HomeIndicator />
-      </div>
+        <div className="photo-picker__home-indicator" aria-hidden="true">
+          <div className="photo-picker__home-indicator-bar" />
+        </div>
+      </footer>
     </div>
   );
 }

@@ -33,9 +33,7 @@ export default function HomeScreen({ onNavigate, onCheckIn }) {
                 <img src={assets.homeNotification} alt="" />
               </div>
             </div>
-            <div className="home-screen__hero-mask">
-              <img src={assets.homeHeroImage} alt="" className="home-screen__hero-image" />
-            </div>
+            <img src={assets.homeHero} alt="" className="home-screen__hero" />
           </div>
 
           <button type="button" className="home-screen__checkin" onClick={onCheckIn}>
