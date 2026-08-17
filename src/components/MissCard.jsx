@@ -57,13 +57,19 @@ const missConfig = {
   },
 };
 
-export default function MissCard({ id, selected, onToggle }) {
+export default function MissCard({ id, selected, selectPop = false, onToggle }) {
   const config = missConfig[id];
 
   return (
     <button
       type="button"
-      className={`miss-card ${selected ? 'miss-card--selected' : ''}`}
+      className={[
+        'miss-card',
+        selected ? 'miss-card--selected' : '',
+        selectPop ? 'miss-card--select-pop' : '',
+      ]
+        .filter(Boolean)
+        .join(' ')}
       style={{
         ...(selected
           ? {

@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import StatusBar from '../components/StatusBar';
 import HomeIndicator from '../components/HomeIndicator';
 import TabBar from '../components/TabBar';
@@ -6,6 +7,27 @@ import { assets } from '../assets';
 import './JournalScreens.css';
 
 export function JournalScreen({ onNavigate, onRecommend }) {
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const [entranceActive, setEntranceActive] = useState(false);
+
+  useEffect(() => {
+    if (prefersReducedMotion) return undefined;
+
+    const frame = requestAnimationFrame(() => {
+      setEntranceActive(true);
+    });
+
+    return () => cancelAnimationFrame(frame);
+  }, [prefersReducedMotion]);
+
+  const recommendClassName = [
+    'journal-recommend',
+    !prefersReducedMotion &&
+      (entranceActive ? 'journal-recommend--entrance' : 'journal-recommend--pre-entrance'),
+  ]
+    .filter(Boolean)
+    .join(' ');
+
   return (
     <div className="screen journal-screen">
       <StatusBar />
@@ -30,7 +52,7 @@ export function JournalScreen({ onNavigate, onRecommend }) {
             <p>
               I couldn&apos;t sleep, so I came to my island. I looked at the blue sky and played a video from our summer trip. It made me feel grateful for those little memories, and I felt much better than before.
             </p>
-            <img src={assets.journalThumb} alt="" />
+            <img src={assets.journalThumb} alt="" loading="lazy" decoding="async" />
           </div>
         </article>
 
@@ -44,7 +66,7 @@ export function JournalScreen({ onNavigate, onRecommend }) {
           </p>
         </article>
 
-        <section className="journal-recommend">
+        <section className={recommendClassName}>
           <h2>Recommended for you</h2>
           <button type="button" className="journal-recommend__card" onClick={onRecommend}>
             <div className="journal-recommend__top">
@@ -76,6 +98,29 @@ export function RecommendActivitiesScreen({ onBack, onIslandDetail }) {
     'Recall one thing you felt grateful for',
     'Let your body rest without forcing sleep',
   ];
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const [entranceActive, setEntranceActive] = useState(false);
+
+  useEffect(() => {
+    if (prefersReducedMotion) return undefined;
+
+    const frame = requestAnimationFrame(() => {
+      setEntranceActive(true);
+    });
+
+    return () => cancelAnimationFrame(frame);
+  }, [prefersReducedMotion]);
+
+  const enterClass = (base) => {
+    if (prefersReducedMotion) {
+      return base;
+    }
+
+    return [
+      base,
+      entranceActive ? `${base}--entrance` : `${base}--pre-entrance`,
+    ].join(' ');
+  };
 
   return (
     <div className="screen recommend-screen screen-scroll">
@@ -93,9 +138,14 @@ export function RecommendActivitiesScreen({ onBack, onIslandDetail }) {
           </button>
         </div>
 
-        <img src={assets.recommendHero} alt="" className="recommend-screen__hero" />
+        <img
+          src={assets.recommendHero}
+          alt=""
+          className={enterClass('recommend-screen__hero recommend-screen__enter-hero')}
+          decoding="async"
+        />
 
-        <div className="recommend-screen__why">
+        <div className={enterClass('recommend-screen__why recommend-screen__enter-why')}>
           <div className="island-screen__label">
             <img src={assets.recommendSparkle} alt="" />
             <span>WHY THIS WAS SUGGESTED</span>
@@ -108,7 +158,7 @@ export function RecommendActivitiesScreen({ onBack, onIslandDetail }) {
         <h2 className="recommend-screen__how-title">How to do it</h2>
         <div className="recommend-screen__steps">
           {steps.map((step, i) => (
-            <div key={step} className="recommend-screen__step">
+            <div key={step} className={enterClass('recommend-screen__step recommend-screen__enter-step')}>
               <span>{i + 1}</span>
               <p>{step}</p>
             </div>
@@ -116,7 +166,7 @@ export function RecommendActivitiesScreen({ onBack, onIslandDetail }) {
         </div>
 
         <button type="button" className="recommend-screen__pair" onClick={onIslandDetail}>
-          <img src={assets.recommendPair} alt="" />
+          <img src={assets.recommendPair} alt="" loading="lazy" decoding="async" />
           <span>
             <small>Pair with</small>
             <strong>Heaven Isle</strong>

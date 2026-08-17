@@ -33,7 +33,7 @@ export default function HomeScreen({ onNavigate, onCheckIn }) {
                 <img src={assets.homeNotification} alt="" />
               </div>
             </div>
-            <img src={assets.homeHero} alt="" className="home-screen__hero" />
+            <img src={assets.homeHero} alt="" className="home-screen__hero" decoding="async" />
           </div>
 
           <button type="button" className="home-screen__checkin" onClick={onCheckIn}>
@@ -70,6 +70,8 @@ export default function HomeScreen({ onNavigate, onCheckIn }) {
                     <img
                       src={item.image}
                       alt=""
+                      loading="lazy"
+                      decoding="async"
                       className={item.clip ? 'home-screen__recent-image home-screen__recent-image--clip' : 'home-screen__recent-image'}
                     />
                   </div>

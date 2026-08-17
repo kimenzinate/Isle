@@ -40,13 +40,19 @@ const feelConfig = {
   },
 };
 
-export default function FeelOption({ id, selected, onSelect }) {
+export default function FeelOption({ id, selected, selectPop = false, onSelect }) {
   const config = feelConfig[id];
 
   return (
     <button
       type="button"
-      className={`feel-option ${selected ? 'feel-option--selected' : ''}`}
+      className={[
+        'feel-option',
+        selected ? 'feel-option--selected' : '',
+        selectPop ? 'feel-option--select-pop' : '',
+      ]
+        .filter(Boolean)
+        .join(' ')}
       style={
         selected
           ? {

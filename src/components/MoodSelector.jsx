@@ -1,3 +1,4 @@
+import { useEffect, useRef, useState } from 'react';
 import { assets } from '../assets';
 import './MoodSelector.css';
 
@@ -35,10 +36,46 @@ const facePositions = [
 
 export default function MoodSelector({ value = 2, onChange }) {
   const face = facePositions[value];
+  const faceRef = useRef(null);
+  const isFirstRender = useRef(true);
+  const reactionToken = useRef(0);
+  const [reactionClass, setReactionClass] = useState('');
+
+  useEffect(() => {
+    if (isFirstRender.current) {
+      isFirstRender.current = false;
+      return;
+    }
+
+    const token = reactionToken.current + 1;
+    reactionToken.current = token;
+    const nextClass = `mood-selector__face--react-${value}`;
+    setReactionClass('');
+
+    const frame = requestAnimationFrame(() => {
+      if (reactionToken.current !== token) return;
+      setReactionClass(nextClass);
+      if (faceRef.current) {
+        faceRef.current.dataset.reactionToken = String(token);
+      }
+    });
+
+    return () => cancelAnimationFrame(frame);
+  }, [value]);
+
+  const handleReactionEnd = (event) => {
+    if (event.target !== faceRef.current) return;
+    if (faceRef.current.dataset.reactionToken !== String(reactionToken.current)) return;
+    setReactionClass('');
+  };
 
   return (
     <div className="mood-selector" role="group" aria-label="Mood">
-      <div className="mood-selector__face">
+      <div
+        ref={faceRef}
+        className={['mood-selector__face', reactionClass].filter(Boolean).join(' ')}
+        onAnimationEnd={handleReactionEnd}
+      >
         <img
           src={moodFaces[value]}
           alt=""

@@ -172,6 +172,37 @@
   line-height: 16.5px;
 }
 
+@keyframes island-select-pop {
+  0% {
+    transform: scale(1) rotate(0deg);
+  }
+
+  35% {
+    transform: scale(0.97) rotate(-1deg);
+  }
+
+  70% {
+    transform: scale(1.025) rotate(1deg);
+  }
+
+  100% {
+    transform: scale(1) rotate(0deg);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .miss-card--select-pop {
+    animation: island-select-pop 300ms cubic-bezier(0.34, 1.15, 0.64, 1) forwards;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .miss-card--select-pop {
+    animation: none;
+    transform: none;
+  }
+}
+
 .checkin-complete__content {
   position: absolute;
   left: 0;
@@ -274,4 +305,121 @@
   line-height: 19.5px;
   color: var(--text-secondary);
   padding: 12px 16px 16px;
+}
+
+@keyframes checkin-icon-enter {
+  0% {
+    opacity: 0;
+    transform: scale(0.85);
+  }
+
+  60% {
+    opacity: 1;
+    transform: scale(1.05);
+  }
+
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes checkin-headline-enter {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes checkin-row-enter {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .checkin-complete--pre-entrance .checkin-complete__enter-icon,
+  .checkin-complete--entrance .checkin-complete__enter-icon {
+    opacity: 0;
+    transform: scale(0.85);
+  }
+
+  .checkin-complete--pre-entrance .checkin-complete__enter-headline,
+  .checkin-complete--pre-entrance .checkin-complete__enter-sub,
+  .checkin-complete--entrance .checkin-complete__enter-headline,
+  .checkin-complete--entrance .checkin-complete__enter-sub {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+
+  .checkin-complete--pre-entrance .checkin-complete__enter-row,
+  .checkin-complete--entrance .checkin-complete__enter-row {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+
+  .checkin-complete--pre-entrance .checkin-complete__enter-create,
+  .checkin-complete--entrance .checkin-complete__enter-create {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+
+  .checkin-complete--entrance .checkin-complete__enter-icon {
+    animation: checkin-icon-enter 400ms ease-out forwards;
+  }
+
+  .checkin-complete--entrance .checkin-complete__enter-headline,
+  .checkin-complete--entrance .checkin-complete__enter-sub {
+    animation: checkin-headline-enter 400ms ease-out forwards;
+    animation-delay: 120ms;
+  }
+
+  .checkin-complete--entrance .checkin-complete__enter-row {
+    animation: checkin-row-enter 350ms ease-out forwards;
+  }
+
+  .checkin-complete--entrance .checkin-complete__enter-row:nth-child(1) {
+    animation-delay: 350ms;
+  }
+
+  .checkin-complete--entrance .checkin-complete__enter-row:nth-child(2) {
+    animation-delay: 420ms;
+  }
+
+  .checkin-complete--entrance .checkin-complete__enter-row:nth-child(3) {
+    animation-delay: 490ms;
+  }
+
+  .checkin-complete--entrance .checkin-complete__enter-create {
+    animation: checkin-row-enter 350ms ease-out forwards;
+    animation-delay: 560ms;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .checkin-complete--entrance .checkin-complete__enter-icon,
+  .checkin-complete--pre-entrance .checkin-complete__enter-icon,
+  .checkin-complete--entrance .checkin-complete__enter-headline,
+  .checkin-complete--pre-entrance .checkin-complete__enter-headline,
+  .checkin-complete--entrance .checkin-complete__enter-sub,
+  .checkin-complete--pre-entrance .checkin-complete__enter-sub,
+  .checkin-complete--entrance .checkin-complete__enter-row,
+  .checkin-complete--pre-entrance .checkin-complete__enter-row,
+  .checkin-complete--entrance .checkin-complete__enter-create,
+  .checkin-complete--pre-entrance .checkin-complete__enter-create {
+    opacity: 1;
+    transform: none;
+    animation: none;
+  }
 }

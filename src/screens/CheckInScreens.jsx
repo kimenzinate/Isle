@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import StatusBar from '../components/StatusBar';
 import HomeIndicator from '../components/HomeIndicator';
 import TopBar from '../components/TopBar';
@@ -6,6 +7,7 @@ import PrimaryButton from '../components/PrimaryButton';
 import MoodSelector from '../components/MoodSelector';
 import FeelOption from '../components/FeelOption';
 import MissCard from '../components/MissCard';
+import { useMultiSelectPopAnimation, useSelectPopAnimation } from '../hooks/useSelectPopAnimation';
 import './CheckInScreens.css';
 
 export function CheckInStep1({ onBack, onNext, mood, onMoodChange }) {
@@ -32,6 +34,7 @@ export function CheckInStep1({ onBack, onNext, mood, onMoodChange }) {
 
 export function CheckInStep2({ onBack, onNext, selectedFeel, onSelectFeel }) {
   const feels = ['calm', 'warm', 'held', 'light'];
+  const popFeelId = useSelectPopAnimation(selectedFeel);
 
   return (
     <div className="screen checkin-screen">
@@ -52,6 +55,7 @@ export function CheckInStep2({ onBack, onNext, selectedFeel, onSelectFeel }) {
               key={feel}
               id={feel}
               selected={selectedFeel === feel}
+              selectPop={popFeelId === feel}
               onSelect={onSelectFeel}
             />
           ))}
@@ -66,6 +70,7 @@ export function CheckInStep2({ onBack, onNext, selectedFeel, onSelectFeel }) {
 }
 
 export function CheckInStep3({ onBack, onComplete, selectedMiss, onToggleMiss }) {
+  const popMissId = useMultiSelectPopAnimation(selectedMiss);
   const rows = [
     ['someone', 'place'],
     ['routine', 'sound'],
@@ -97,6 +102,7 @@ export function CheckInStep3({ onBack, onComplete, selectedMiss, onToggleMiss })
                   key={id}
                   id={id}
                   selected={selectedMiss.includes(id)}
+                  selectPop={popMissId === id}
                   onToggle={onToggleMiss}
                 />
               ))}
@@ -124,19 +130,39 @@ export function CheckInComplete({ checkInData, onCreateIsland, onBackHome }) {
   };
 
   const missText = checkInData.miss.map((id) => missLabels[id]).join(', ');
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const [entranceActive, setEntranceActive] = useState(false);
+
+  useEffect(() => {
+    if (prefersReducedMotion) return undefined;
+
+    const frame = requestAnimationFrame(() => {
+      setEntranceActive(true);
+    });
+
+    return () => cancelAnimationFrame(frame);
+  }, [prefersReducedMotion]);
+
+  const screenClassName = [
+    'screen',
+    'checkin-complete',
+    !prefersReducedMotion && (entranceActive ? 'checkin-complete--entrance' : 'checkin-complete--pre-entrance'),
+  ]
+    .filter(Boolean)
+    .join(' ');
 
   return (
-    <div className="screen checkin-complete">
+    <div className={screenClassName}>
       <StatusBar />
       <div className="checkin-complete__content">
-        <div className="checkin-complete__icon-wrap">
+        <div className="checkin-complete__icon-wrap checkin-complete__enter-icon">
           <img src="/assets/check-complete-icon.svg" alt="" />
         </div>
-        <h1 className="serif-title-md">Your check-in is complete!</h1>
-        <p className="checkin-complete__sub">Your island is ready to support you today.</p>
+        <h1 className="serif-title-md checkin-complete__enter-headline">Your check-in is complete!</h1>
+        <p className="checkin-complete__sub checkin-complete__enter-sub">Your island is ready to support you today.</p>
 
         <div className="checkin-complete__summary">
-          <div className="checkin-complete__row">
+          <div className="checkin-complete__row checkin-complete__enter-row">
             <span className="checkin-complete__row-icon" style={{ background: 'rgba(168,197,200,0.27)' }}>
               <img src="/assets/check-feel-now.svg" alt="" />
             </span>
@@ -145,7 +171,7 @@ export function CheckInComplete({ checkInData, onCreateIsland, onBackHome }) {
               <span>{checkInData.moodLabel}</span>
             </span>
           </div>
-          <div className="checkin-complete__row">
+          <div className="checkin-complete__row checkin-complete__enter-row">
             <span className="checkin-complete__row-icon" style={{ background: 'rgba(232,149,106,0.3)' }}>
               <img src="/assets/check-feel-want.svg" alt="" />
             </span>
@@ -154,7 +180,7 @@ export function CheckInComplete({ checkInData, onCreateIsland, onBackHome }) {
               <span>{feelLabels[checkInData.feel]}</span>
             </span>
           </div>
-          <div className="checkin-complete__row">
+          <div className="checkin-complete__row checkin-complete__enter-row">
             <span className="checkin-complete__row-icon" style={{ background: 'rgba(232,215,106,0.27)' }}>
               <img src="/assets/check-miss.svg" alt="" />
             </span>
@@ -165,7 +191,7 @@ export function CheckInComplete({ checkInData, onCreateIsland, onBackHome }) {
           </div>
         </div>
 
-        <PrimaryButton variant="charcoal" className="checkin-complete__create" onClick={onCreateIsland}>
+        <PrimaryButton variant="charcoal" className="checkin-complete__create checkin-complete__enter-create" onClick={onCreateIsland}>
           Create my island
         </PrimaryButton>
         <button type="button" className="checkin-complete__back" onClick={onBackHome}>

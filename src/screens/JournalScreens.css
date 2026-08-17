@@ -200,6 +200,40 @@
   color: #434343;
 }
 
+@keyframes journal-recommend-enter {
+  from {
+    opacity: 0;
+    transform: translateY(24px) scale(0.98);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .journal-recommend--pre-entrance,
+  .journal-recommend--entrance {
+    opacity: 0;
+    transform: translateY(24px) scale(0.98);
+  }
+
+  .journal-recommend--entrance {
+    animation: journal-recommend-enter 550ms cubic-bezier(0.34, 1.15, 0.64, 1) forwards;
+    animation-delay: 300ms;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .journal-recommend--entrance,
+  .journal-recommend--pre-entrance {
+    opacity: 1;
+    transform: none;
+    animation: none;
+  }
+}
+
 .recommend-screen__content {
   padding: 96px 24px 40px;
 }
@@ -232,6 +266,104 @@
   border-radius: 16px;
   object-fit: cover;
   margin-bottom: 20px;
+}
+
+@keyframes recommend-hero-enter {
+  from {
+    opacity: 0;
+    transform: scale(1.02);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes recommend-why-enter {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes recommend-step-enter {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .recommend-screen__enter-hero--pre-entrance,
+  .recommend-screen__enter-hero--entrance {
+    opacity: 0;
+    transform: scale(1.02);
+  }
+
+  .recommend-screen__enter-hero--entrance {
+    animation: recommend-hero-enter 475ms ease-out forwards;
+  }
+
+  .recommend-screen__enter-why--pre-entrance,
+  .recommend-screen__enter-why--entrance {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  .recommend-screen__enter-why--entrance {
+    animation: recommend-why-enter 400ms ease-out forwards;
+    animation-delay: 120ms;
+  }
+
+  .recommend-screen__enter-step--pre-entrance,
+  .recommend-screen__enter-step--entrance {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+
+  .recommend-screen__enter-step--entrance {
+    animation: recommend-step-enter 350ms ease-out forwards;
+  }
+
+  .recommend-screen__enter-step--entrance:nth-child(1) {
+    animation-delay: 350ms;
+  }
+
+  .recommend-screen__enter-step--entrance:nth-child(2) {
+    animation-delay: 420ms;
+  }
+
+  .recommend-screen__enter-step--entrance:nth-child(3) {
+    animation-delay: 490ms;
+  }
+
+  .recommend-screen__enter-step--entrance:nth-child(4) {
+    animation-delay: 560ms;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .recommend-screen__enter-hero--entrance,
+  .recommend-screen__enter-hero--pre-entrance,
+  .recommend-screen__enter-why--entrance,
+  .recommend-screen__enter-why--pre-entrance,
+  .recommend-screen__enter-step--entrance,
+  .recommend-screen__enter-step--pre-entrance {
+    opacity: 1;
+    transform: none;
+    animation: none;
+  }
 }
 
 .recommend-screen__why {

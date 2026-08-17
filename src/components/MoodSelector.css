@@ -14,6 +14,120 @@
   width: 184px;
   height: 184px;
   flex-shrink: 0;
+  transform-origin: center center;
+  will-change: transform;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .mood-selector__face--react-0 {
+    animation: mood-face-drop-heavy 580ms cubic-bezier(0.34, 1.15, 0.48, 1) forwards;
+  }
+
+  .mood-selector__face--react-1 {
+    animation: mood-face-drop-light 540ms cubic-bezier(0.34, 1.1, 0.48, 1) forwards;
+  }
+
+  .mood-selector__face--react-2 {
+    animation: mood-face-pulse 500ms cubic-bezier(0.45, 0, 0.25, 1) forwards;
+  }
+
+  .mood-selector__face--react-3 {
+    animation: mood-face-bounce-up 560ms cubic-bezier(0.34, 1.28, 0.48, 1) forwards;
+  }
+
+  .mood-selector__face--react-4 {
+    animation: mood-face-bounce-strong 640ms cubic-bezier(0.34, 1.35, 0.48, 1) forwards;
+  }
+}
+
+@keyframes mood-face-drop-heavy {
+  0% {
+    transform: translateY(0) scale(1, 1);
+  }
+
+  38% {
+    transform: translateY(12px) scale(1.035, 0.94);
+  }
+
+  68% {
+    transform: translateY(2px) scale(1.01, 0.99);
+  }
+
+  100% {
+    transform: translateY(0) scale(1, 1);
+  }
+}
+
+@keyframes mood-face-drop-light {
+  0% {
+    transform: translateY(0) scale(1, 1);
+  }
+
+  42% {
+    transform: translateY(7px) scale(1.02, 0.97);
+  }
+
+  100% {
+    transform: translateY(0) scale(1, 1);
+  }
+}
+
+@keyframes mood-face-pulse {
+  0% {
+    transform: scale(1);
+  }
+
+  45% {
+    transform: scale(0.98);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes mood-face-bounce-up {
+  0% {
+    transform: translateY(0);
+  }
+
+  38% {
+    transform: translateY(-8px);
+  }
+
+  68% {
+    transform: translateY(1px);
+  }
+
+  100% {
+    transform: translateY(0);
+  }
+}
+
+@keyframes mood-face-bounce-strong {
+  0% {
+    transform: translateY(0);
+  }
+
+  28% {
+    transform: translateY(-15px);
+  }
+
+  48% {
+    transform: translateY(3px);
+  }
+
+  62% {
+    transform: translateY(-4px);
+  }
+
+  78% {
+    transform: translateY(1px);
+  }
+
+  100% {
+    transform: translateY(0);
+  }
 }
 
 .mood-selector__face-img {

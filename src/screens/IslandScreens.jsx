@@ -1,10 +1,11 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import StatusBar from '../components/StatusBar';
 import HomeIndicator from '../components/HomeIndicator';
 import TopBar from '../components/TopBar';
 import BackButton from '../components/BackButton';
 import TabBar from '../components/TabBar';
 import PrimaryButton from '../components/PrimaryButton';
+import { useSelectPopAnimation } from '../hooks/useSelectPopAnimation';
 import { assets } from '../assets';
 import './IslandScreens.css';
 
@@ -413,6 +414,7 @@ const PHOTO_PICKER_SELECTED_INDEX = 8;
 
 export function IslandCreatePhotoPicker({ onCancel, onUpload }) {
   const [selectedIndex, setSelectedIndex] = useState(PHOTO_PICKER_SELECTED_INDEX);
+  const popCheckIndex = useSelectPopAnimation(selectedIndex);
 
   return (
     <div className="screen photo-picker">
@@ -425,9 +427,19 @@ export function IslandCreatePhotoPicker({ onCancel, onUpload }) {
               className="photo-picker__cell"
               onClick={() => setSelectedIndex(index)}
             >
-              <img src={src} alt="" />
+              <img src={src} alt="" className="photo-picker__photo" />
               {selectedIndex === index && (
-                <img src={assets.photoPickerSelected} alt="" className="photo-picker__check" />
+                <span
+                  className={[
+                    'photo-picker__check',
+                    popCheckIndex === index ? 'picker-check--select-pop' : '',
+                  ]
+                    .filter(Boolean)
+                    .join(' ')}
+                  aria-hidden="true"
+                >
+                  <img src={assets.photoPickerSelected} alt="" />
+                </span>
               )}
             </button>
           ))}
@@ -546,6 +558,7 @@ export function IslandCreateUploadSound({ title, note, onTitleChange, onNoteChan
 
 export function IslandCreateSoundPicker({ onCancel, onUpload }) {
   const [selectedId, setSelectedId] = useState(9);
+  const popCheckId = useSelectPopAnimation(selectedId);
 
   return (
     <div className="screen sound-picker">
@@ -579,11 +592,20 @@ export function IslandCreateSoundPicker({ onCancel, onUpload }) {
               className={`sound-picker__item ${selectedId === file.id ? 'sound-picker__item--selected' : ''}`}
               onClick={() => setSelectedId(file.id)}
             >
-              <img
-                src={selectedId === file.id ? assets.soundPickerCheckboxSelected : assets.soundPickerCheckbox}
-                alt=""
-                className="sound-picker__checkbox"
-              />
+              <span
+                className={[
+                  'sound-picker__checkbox-wrap',
+                  selectedId === file.id && popCheckId === file.id ? 'picker-check--select-pop' : '',
+                ]
+                  .filter(Boolean)
+                  .join(' ')}
+              >
+                <img
+                  src={selectedId === file.id ? assets.soundPickerCheckboxSelected : assets.soundPickerCheckbox}
+                  alt=""
+                  className="sound-picker__checkbox"
+                />
+              </span>
               {file.blank ? (
                 <span className="sound-picker__file-preview sound-picker__file-preview--blank" />
               ) : (
@@ -848,6 +870,29 @@ export function IslandDetailInfoScreen({ onBack, onEnterXr }) {
       imageHeight: 101,
     },
   ];
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const [entranceActive, setEntranceActive] = useState(false);
+
+  useEffect(() => {
+    if (prefersReducedMotion) return undefined;
+
+    const frame = requestAnimationFrame(() => {
+      setEntranceActive(true);
+    });
+
+    return () => cancelAnimationFrame(frame);
+  }, [prefersReducedMotion]);
+
+  const enterClass = (base) => {
+    if (prefersReducedMotion) {
+      return base;
+    }
+
+    return [
+      base,
+      entranceActive ? `${base}--entrance` : `${base}--pre-entrance`,
+    ].join(' ');
+  };
 
   return (
     <div className="screen island-detail-info">
@@ -855,7 +900,7 @@ export function IslandDetailInfoScreen({ onBack, onEnterXr }) {
       <TopBar onBack={onBack} />
       <div className="island-detail-info__scroll screen-scroll">
         <div className="island-detail-info__content">
-          <header className="island-detail-info__header">
+          <header className={enterClass('island-detail-info__header island-detail-info__enter-header')}>
             <h1 className="serif-title-xl">Ready for your island?</h1>
             <p className="body-sm">Before entering XR, here&apos;s what to know.</p>
           </header>
@@ -864,7 +909,7 @@ export function IslandDetailInfoScreen({ onBack, onEnterXr }) {
             <h2>How to do it</h2>
             <div className="island-detail-info__steps-list">
               {steps.map((step) => (
-                <div key={step.title} className="island-detail-info__step">
+                <div key={step.title} className={enterClass('island-detail-info__step island-detail-info__enter-step')}>
                   <div className="island-detail-info__step-copy">
                     <div className="island-detail-info__step-heading">
                       <span className="island-detail-info__step-icon" style={{ background: step.iconBg }}>
@@ -883,7 +928,7 @@ export function IslandDetailInfoScreen({ onBack, onEnterXr }) {
           </section>
         </div>
       </div>
-      <div className="island-detail-info__footer">
+      <div className={enterClass('island-detail-info__footer island-detail-info__enter-cta')}>
         <PrimaryButton onClick={onEnterXr}>Enter to XR</PrimaryButton>
       </div>
       <HomeIndicator bare />
